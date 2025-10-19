@@ -995,7 +995,9 @@
 
     </div>
 
-
+    <!-- ========== ADDED AUDIO (plays when "Click me now !" is clicked) ========== -->
+    <!-- Put your audio file at ./audio/music.mp3 or change src accordingly -->
+    <audio id="bg-music" src="./audio/music.mp3" loop preload="auto"></audio>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 
@@ -1247,6 +1249,27 @@
             },
             autoplay: true,
         });
+
+        // ------------------------
+        // Play music when the "Click me now !" text is clicked
+        // ------------------------
+        (function () {
+            const audio = document.getElementById('bg-music');
+            const clickText = document.getElementById('text-click');
+
+            if (!clickText || !audio) return;
+
+            // make it obvious that the text is clickable
+            clickText.style.cursor = 'pointer';
+
+            clickText.addEventListener('click', function (ev) {
+                // Try to play the audio (modern browsers require a user gesture)
+                audio.play().catch((err) => {
+                    // ignore — play may fail if browser blocks, but user clicking should usually allow it
+                    console.warn('Audio play blocked or failed:', err);
+                });
+            });
+        })();
 
     </script>
 </body>
